@@ -196,7 +196,14 @@ def login():
     print(content)
     #print(User.query.filter(User.email==email, User.password==password).first().id)
     if (User.query.filter(User.email==email, User.password==password).first()):
-        return str(User.query.filter(User.email == email, User.password == password).first().id)
+        user = User.query.filter(User.email == email, User.password == password).first()
+        resp = jsonify()
+        resp.status_code = 200
+        print(user)
+        data = {'user_id': user.id, 'name': user.name}
+        resp.data = data
+
+        return resp
     else:
         return "no"
 
