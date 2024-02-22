@@ -99,6 +99,7 @@ def create_transfer():
     category = content['category']
     payment_name = content['payment_name']
     transfer = Transfer(user_id=user_id, type_transfer=type_transfer, name=name, description=description, price=price, date_time=date_time, icon=icon, category=category, payment_name=payment_name)
+    UserPayment.query.filter_by(payment_name=payment_name).payment_balance += price
     try:
         db.session.add(transfer)
         db.session.commit()
