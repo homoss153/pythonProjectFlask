@@ -168,7 +168,10 @@ def del_transfer():
     price = content['price']
 
     Transfer.query.filter_by(user_id=user_id, payment_name=payment_name, date_time=date, price=price, category=category).delete()
-    UserPayment.query.filter_by(payment_name=payment_name).first().payment_balance -= price
+    try:
+        UserPayment.query.filter_by(payment_name=payment_name).first().payment_balance -= price
+    except:
+        pass
     db.session.commit()
     resp = jsonify()
     resp.status_code = 200
