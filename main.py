@@ -201,6 +201,7 @@ def login():
         data = {'user_id': user.id, 'name': user.name}
         resp.data = data
         ret = [i.serialize for i in User.query.filter(User.email == email, User.password == password).first()]
+        print(User.query.filter(User.email == email, User.password == password).first())
 
         return jsonify(ret)
     else:
