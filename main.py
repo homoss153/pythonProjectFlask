@@ -139,6 +139,22 @@ def get_payment():
         return "no"
 
 
+@app.route('/del_payment', methods=['POST'])
+def del_payment():
+
+    content = json.loads(request.json)
+    print(content)
+    user_id = content['user_id']
+    payment_name = content['payment_name']
+    payment_balance = content['payment_balance']
+    bank_icon = content['bank_icon']
+
+    UserPayment.query.filter_by(user_id=user_id, payment_name=payment_name, payment_balance=payment_balance, payment_type=payment_type, bank_icon=bank_icon).delete()
+    resp = jsonify()
+    resp.status_code = 200
+    return resp
+
+
 @app.route('/get_user', methods=['GET'])
 def get_user():
     #content = request.get_json()
