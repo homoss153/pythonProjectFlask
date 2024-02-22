@@ -156,6 +156,23 @@ def del_payment():
     resp.status_code = 200
     return resp
 
+@app.route('/del_transfer', methods=['POST'])
+def del_transfer():
+
+    content = json.loads(request.json)
+    print(content)
+    user_id = content['user_id']
+    payment_name = content['payment_name']
+    date = content['date']
+    category = content['category']
+    price = content['price']
+
+    Transfer.query.filter_by(user_id=user_id, payment_name=payment_name, date=date, price=price, category=category).delete()
+    db.session.commit()
+    resp = jsonify()
+    resp.status_code = 200
+    return resp
+
 
 @app.route('/get_user', methods=['GET'])
 def get_user():
