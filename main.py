@@ -54,9 +54,7 @@ class User(db.Model):
     def serialize(self):
         """Return object data in easily serializable format"""
         return {
-            'id': self.id,
-            'email': self.email,
-            'password': self.password,
+            'user_id': self.id,
             'name': self.name
         }
 
@@ -202,8 +200,9 @@ def login():
         print(user)
         data = {'user_id': user.id, 'name': user.name}
         resp.data = data
+        ret = [i.serialize for i in User.query.filter(User.email == email, User.password == password).first()]
 
-        return resp
+        return jsonify(ret)
     else:
         return "no"
 
