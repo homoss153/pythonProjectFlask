@@ -150,6 +150,7 @@ def del_payment():
     bank_icon = content['bank_icon']
 
     UserPayment.query.filter_by(user_id=user_id, payment_name=payment_name, payment_balance=payment_balance, bank_icon=bank_icon).delete()
+    Transfer.query.filter_by(payment_name=payment_name).delete()
     db.session.commit()
     resp = jsonify()
     resp.status_code = 200
